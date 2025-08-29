@@ -15,5 +15,11 @@
     --text-2-xs: .625rem;
 
     --color-black: oklch(0.14 0 0);
-
+    --color-sprout: oklch(0.7107 0.1466 133);
 }
+
+select option {
+   background-color: oklch(0.3 0 0);
+   font-weight: semibold;
+   color: white;
+ }
