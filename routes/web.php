@@ -7,6 +7,10 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/up', function () {
+    return response('OK', 200);
+});
+
 Route::get('/',[JobController::class,'index']);
 Route::get('/search', SearchController::class);
 
