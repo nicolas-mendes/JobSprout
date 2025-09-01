@@ -1,61 +1,73 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <h1 align="center">JobSprout</h1>
 </p>
 
-## About Laravel
+<p align="center">
+  Uma plataforma de anúncios de vagas construída com Laravel, projetada para conectar empresas e pessoas em busca de emprego.
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <img src="https://img.shields.io/badge/PHP-8.2%2B-blue" alt="PHP Version">
+  <img src="https://img.shields.io/badge/Laravel-11.x-red" alt="Laravel Version">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📋 Índice
 
-## Learning Laravel
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Funcionalidades Principais](#funcionalidades-principais)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Demonstração Visual](#demonstração-visual)
+- [Começando](#começando)
+  - [Pré-requisitos](#pré-requisitos)
+  - [Instalação](#instalação)
+- [Testes](#testes)
+- [Licença](#licença)
+- [Contato](#contato)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📖 Sobre o Projeto
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**JobSprout** é uma aplicação web full-stack desenvolvida para simplificar o processo de divulgação de vagas de emprego. A plataforma permite que empresas se cadastrem, publiquem suas vagas e alcancem candidatos qualificados. O fluxo para os candidatos é projetado para ser simples: eles visualizam a vaga e são redirecionados diretamente para o sistema de aplicação da empresa anunciante.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ✨ Funcionalidades Principais
 
-## Laravel Sponsors
+### Para Empresas (Recrutadores)
+-   ✅ **Sistema de Autenticação Completo:** Cadastro, login e logout seguros para gerenciar o perfil da empresa.
+-   🔐 **Autorização e Posse de Dados:** Uma empresa só pode editar e gerenciar as vagas que ela mesma criou, garantindo a segurança e a integridade dos dados.
+-   💼 **Gerenciamento de Vagas (CRUD):** Funcionalidade completa para criar, listar, editar e remover anúncios de emprego.
+-   📝 **Validação de Formulários:** Toda entrada de dados é rigorosamente validada no back-end para prevenir dados malformados e garantir a segurança.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Para Candidatos (Visitantes)
+-   🔍 **Listagem e Busca de Vagas:** Interface limpa para visualizar as vagas mais recentes e as que estão em destaque.
+-   🏷️ **Filtragem por Tags:** Sistema de filtragem que permite aos usuários encontrar vagas por categoria (ex: "PHP", "Laravel", "Trainee").
+-   🚀 **Redirecionamento Direto:** Ao clicar em uma vaga, o usuário é redirecionado para a URL externa fornecida pela empresa, agilizando o processo de candidatura.
 
-### Premium Partners
+## 🛠️ Tecnologias Utilizadas
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Este projeto foi construído utilizando as seguintes tecnologias e ferramentas:
 
-## Contributing
+-   **Backend:** PHP, Laravel
+-   **Frontend:** Tailwind CSS, Blade
+-   **Banco de Dados:** MySQL
+-   **Ferramentas de Desenvolvimento:** Vite, Composer, Git
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🖼️ Demonstração Visual
 
-## Code of Conduct
+Aqui estão algumas prévias da aplicação em funcionamento.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Página Inicial
+*Uma visão geral das vagas em destaque e da listagem principal.*
 
-## Security Vulnerabilities
+`![Página Inicial do JobSprout](URL_DA_IMAGEM_AQUI)`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Formulário de Criação de Vaga
+*A interface que as empresas usam para postar uma nova oportunidade (acessível apenas para usuários autenticados).*
 
-## License
+`![Formulário de Criação de Vaga](URL_DA_IMAGEM_AQUI)`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Página de Apresentação das vagas
+*Exemplo de como os usuários podem filtrar vagas por uma categoria específica.*
+
+`![Busca e Filtragem por Tags](URL_DA_IMAGEM_AQUI)`

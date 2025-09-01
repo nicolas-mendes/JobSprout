@@ -26,8 +26,7 @@
 
             <div class="space-x-6 font-semibold text-lg font-mont">
                 <a href="">Jobs</a>
-                <a href="">Carrers</a>
-                <a href="">Salaries</a>
+                <a href="">Careers</a>
                 <a href="">Companies</a>
             </div>
 
