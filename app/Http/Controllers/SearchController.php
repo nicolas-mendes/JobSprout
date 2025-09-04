@@ -22,8 +22,8 @@ class SearchController extends Controller
             $query->where('title', 'LIKE', '%' . $q . '%');
         }
 
-        $jobs = $query->get();
+        $jobs = $query->simplePaginate(10)->withQueryString();
 
-        return view('results', ['jobs' => $jobs]);
+        return view('results', ['jobs' => $jobs, 'q' => $q]);
     }
 }

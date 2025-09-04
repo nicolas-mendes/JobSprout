@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
         <div>
             <h1 class="mt-5 text-xl"><strong>Job Link:</strong></h1> <a class="text-sprout" href="{{ $job->url }}">{{$job->url}}</a>
-            <h1 class="mt-5 text-xl"><strong>Company:</strong></h1> <a class="text-sprout" href="/company/"> {{ $job->employer->name }}</a>
+            <h1 class="mt-5 text-xl"><strong>Company:</strong></h1> <a class="text-sprout" href="/company/{{ $job->employer->id }}"> {{ $job->employer->name }}</a>
             <h1 class="mt-5 text-xl"><strong>Salary per Year:</strong></h1> <p>U$ {{ number_format($job['salary'], 2, '.', ' ') }}</p>
         </div>
         <x-employer-logo :width="120" :logo="$job->employer->logo"></x-employer-logo>

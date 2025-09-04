@@ -12,7 +12,8 @@ class TagController extends Controller
         $jobs = $tag->jobs() 
                     ->with(['employer', 'tags'])
                     ->latest()
-                    ->simplePaginate(10);
+                    ->simplePaginate(10)
+                    ->withQueryString();
 
        return view('results',[
         'jobs' => $jobs,

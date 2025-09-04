@@ -7,8 +7,7 @@
                 <input type="text" name="q" id="q" placeholder="Frontend Developer..." class="rounded-xl bg-white/15 border border-white/10 px-5 py-4 w-full max-w-3xl">
             </form> --}}
             <x-forms.form action="/search" class="mt-6">
-                <div
-                    class="flex items-center bg-white/15 rounded-xl px-2 py-1.5 focus-within:ring-2 focus-within:ring-white/50 w-full max-w-3xl">
+                <div class="flex items-center bg-white/15 rounded-xl px-2 py-3 focus-within:ring-2 focus-within:ring-white/50 w-full max-w-3xl">
 
                     <select name="filter" class="">
                         <option value="job" class="text-black">Job</option>
