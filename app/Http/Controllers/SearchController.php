@@ -9,11 +9,21 @@ class SearchController extends Controller
 {
     public function __invoke()
     {
-       $jobs = Job::query()
-            ->with(['employer','tags'])
-            ->where('title','LIKE','%'.request('q').'%')
-            ->get();
+        $q = request()->input('q');
+        $filter = request()->input('filter','job');
 
-       return view('results',['jobs' => $jobs]);
+        $query = Job::query()->with(['employer', 'tags']);
+        
+       if ($filter === 'tag') {
+            $query->whereHas('tags', function ($subQuery) use ($q) {
+                $subQuery->where('title', 'LIKE', '%' . $q . '%');
+            });
+        } else {
+            $query->where('title', 'LIKE', '%' . $q . '%');
+        }
+
+        $jobs = $query->get();
+
+        return view('results', ['jobs' => $jobs]);
     }
 }

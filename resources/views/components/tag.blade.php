@@ -4,7 +4,7 @@
     $classes = "bg-white/10 hover:bg-white/30 transition-colors duration-300 font-bold rounded-xl";
 
     if ($size == 'base'){
-        $classes .= " px-5 py-1 text-ms";
+        $classes .= " px-5 py-1 text-sm";
     }
     
     if ($size == 'small'){
@@ -13,4 +13,4 @@
 
 @endphp
 
-<a href="/tags/{{ strtolower($tag->name) }}" class="{{ $classes }}">{{ $tag->name }}</a>
+<a href="/tags/{{ strtolower($tag->title) }}" class="{{ $classes }}">{{ $tag->title }}</a>

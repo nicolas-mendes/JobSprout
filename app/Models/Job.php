@@ -13,7 +13,7 @@ class Job extends Model
 
     public function tag(string $name)
     {
-        $tag = Tag::firstOrCreate(['name' => $name]);
+        $tag = Tag::firstOrCreate(['title' => $name]);
 
         $this->tags()->attach($tag);
     }

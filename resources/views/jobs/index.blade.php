@@ -7,7 +7,19 @@
                 <input type="text" name="q" id="q" placeholder="Frontend Developer..." class="rounded-xl bg-white/15 border border-white/10 px-5 py-4 w-full max-w-3xl">
             </form> --}}
             <x-forms.form action="/search" class="mt-6">
-                <x-forms.input :label="false" name="q" placeholder="Frontend Developer..." class="bg-white/15 w-full max-w-3xl"/>
+                <div
+                    class="flex items-center bg-white/15 rounded-xl px-2 py-1.5 focus-within:ring-2 focus-within:ring-white/50 w-full max-w-3xl">
+
+                    <select name="filter" class="">
+                        <option value="job" class="text-black">Job</option>
+                        <option value="tag" class="text-black">Tag</option>
+                    </select>
+
+                    <div class="h-6 w-px bg-white/25 mx-2"></div>
+
+                    <input name="q" placeholder="Frontend Developer . . ."
+                        class="bg-transparent flex-1 text-white placeholder:text-white/50 focus:outline-none">
+                </div>
             </x-forms.form>
 
         </section>
@@ -24,7 +36,7 @@
 
         <section>
             <x-section-heading>Tags</x-section-heading>
-            <div class="mt-4 space-x-1">
+            <div class="flex mt-4 flex-wrap gap-x-1 gap-y-2">
                 @foreach ($tags as $tag)
                     <x-tag :$tag />
                 @endforeach
@@ -40,7 +52,10 @@
                     <x-job-card-wide :$job />
                 @endforeach
             </div>
+            {{-- Pagination --}}
+            <div class="mt-4">
+                {{ $jobs->links() }}
+            </div>
         </section>
     </div>
 </x-layout>
-    

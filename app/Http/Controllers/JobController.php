@@ -16,12 +16,28 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::latest()->with(['employer','tags'])->get()->groupBy('featured');
+        $featuredJobs = Job::latest()
+        ->with(['employer', 'tags'])
+        ->where('featured', true)
+        ->take(6)
+        ->get();
+
+    
+        $jobs = Job::latest()
+        ->with(['employer', 'tags'])
+        ->where('featured', false)
+        ->simplePaginate(6);
+
+    
+        $tags = Tag::withCount('jobs')
+        ->orderBy('jobs_count', 'desc')
+        ->take(15)
+        ->get();
 
         return view('jobs.index', [
-            'featuredJobs' => $jobs[1],
-            'jobs' => $jobs[0],
-            'tags' => Tag::all(),
+        'featuredJobs' => $featuredJobs,
+        'jobs'         => $jobs,
+        'tags'         => $tags,
         ]);
     }
 
@@ -59,7 +75,49 @@ class JobController extends Controller
             }
         }
 
-        return redirect('/');
+        return redirect("/jobs/$job->id");
+    }
+
+    public function show(Job $job)
+    {
+        return view('jobs.show', ['job' => $job]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Job $job)
+    {
+        return view('jobs.edit', ['job' => $job]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Job $job)
+    {
+        request()->validate([
+            'title' => ['required','string','max:255','min:3'],
+            'salary' => ['required','numeric','decimal:0,2'],
+            'description' => ['required','string','max:65535']
+        ]);
+
+        $job->update([
+            'title' => request('title'),
+            'salary' => request('salary'),
+            'description' => request('description')
+        ]);
+
+        return redirect('/jobs/'.$job->id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Job $job)
+    {
+        $job->delete();
+        return view('jobs.index');
     }
 
 }
