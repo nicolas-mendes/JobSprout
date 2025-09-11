@@ -1,0 +1,48 @@
+# Arquivo: render.yaml
+
+services:
+  # Serviço 1: A Aplicação Laravel (Web Service)
+  - type: web
+    name: jobsprout # O nome do seu app
+    env: php      # <--- ESTA LINHA É A SOLUÇÃO! Força o ambiente PHP.
+    plan: free    # Garante que está no plano gratuito
+    region: frankfurt # Região do plano gratuito (pode ser oregon também)
+
+    # Comando para construir a aplicação (instalar dependências, etc.)
+    buildCommand: "composer install --no-dev --optimize-autoloader && npm install && npm run build"
+    
+    # Comando para iniciar o servidor web
+    startCommand: "heroku-php-apache2 public/"
+    
+    # Variáveis de Ambiente
+    envVars:
+      - key: APP_URL
+        # Gera a URL automaticamente baseada no serviço
+        fromService:
+          type: web
+          name: jobsprout
+          property: url
+      - key: APP_KEY
+        # Sincroniza com o valor que você já definiu nos "secrets"
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DATABASE_URL
+        # Pega a URL de conexão interna do serviço de banco de dados abaixo
+        fromService:
+          type: psql
+          name: jobsprout-db # Garanta que este nome seja o mesmo do serviço de DB
+          property: internalUrl
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+
+  # Serviço 2: O Banco de Dados PostgreSQL
+  - type: psql
+    name: jobsprout-db # O nome do seu banco
+    plan: free
+    region: frankfurt
+    # (O Render gerencia as versões do Postgres automaticamente)
