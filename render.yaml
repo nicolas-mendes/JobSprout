@@ -30,7 +30,7 @@ services:
       - key: DATABASE_URL
         # Pega a URL de conexão interna do serviço de banco de dados abaixo
         fromService:
-          type: psql
+          type: pgsql
           name: jobsprout-db # Garanta que este nome seja o mesmo do serviço de DB
           property: internalUrl
       - key: LOG_CHANNEL
@@ -41,7 +41,7 @@ services:
         value: false
 
   # Serviço 2: O Banco de Dados PostgreSQL
-  - type: psql
+  - type: pgsql
     name: jobsprout-db # O nome do seu banco
     plan: free
     region: frankfurt
