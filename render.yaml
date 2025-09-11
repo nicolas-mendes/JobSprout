@@ -3,35 +3,33 @@
 services:
   # Serviço 1: A Aplicação Laravel (Web Service)
   - type: web
-    name: jobsprout # O nome do seu app
-    env: docker      # <--- ESTA LINHA É A SOLUÇÃO! Força o ambiente PHP.
-    plan: free    # Garante que está no plano gratuito
-    region: frankfurt # Região do plano gratuito (pode ser oregon também)
+    name: jobsprout
+    env: docker # Usa o Dockerfile na raiz do projeto
+    plan: free
+    region: frankfurt
+    
+    # REMOVIDO: buildCommand e startCommand não são necessários com Docker,
+    # pois essa lógica já está no seu Dockerfile e entrypoint.sh.
+    
+    # Adicione um Health Check para o Render saber quando sua aplicação está pronta
+    healthCheck:
+      path: /up
 
-    # Comando para construir a aplicação (instalar dependências, etc.)
-    buildCommand: "composer install --no-dev --optimize-autoloader && npm install && npm run build"
-    
-    # Comando para iniciar o servidor web
-    startCommand: "heroku-php-apache2 public/"
-    
     # Variáveis de Ambiente
     envVars:
       - key: APP_URL
-        # Gera a URL automaticamente baseada no serviço
         fromService:
           type: web
           name: jobsprout
           property: url
       - key: APP_KEY
-        # Sincroniza com o valor que você já definiu nos "secrets"
         sync: false
       - key: DB_CONNECTION
-        value: pgsql
+        value: pgsql # Aqui no .env do Laravel continua sendo 'pgsql'
       - key: DATABASE_URL
-        # Pega a URL de conexão interna do serviço de banco de dados abaixo
         fromService:
-          type: pgsql
-          name: jobsprout-db # Garanta que este nome seja o mesmo do serviço de DB
+          type: psql # <-- CORRIGIDO AQUI
+          name: jobsprout-db
           property: internalUrl
       - key: LOG_CHANNEL
         value: stderr
@@ -41,8 +39,7 @@ services:
         value: false
 
   # Serviço 2: O Banco de Dados PostgreSQL
-  - type: pgsql
-    name: jobsprout-db # O nome do seu banco
+  - type: psql # <-- CORRIGIDO AQUI
+    name: jobsprout-db
     plan: free
     region: frankfurt
-    # (O Render gerencia as versões do Postgres automaticamente)
