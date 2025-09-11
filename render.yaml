@@ -1,36 +1,29 @@
+databases:
+  - name: jobsprout-db
+    plan: free
+    region: frankfurt
+    ipAllowList: []
+
 services:
   - type: web
     name: jobsprout
-    env: docker
+    runtime: docker
     plan: free
     region: frankfurt
+    healthCheckPath: /up
     
-    healthCheck:
-      path: /up
-
     envVars:
-      - key: APP_URL
-        fromService:
-          type: web
-          name: jobsprout
-          property: url
       - key: APP_KEY
         sync: false
       - key: DB_CONNECTION
         value: pgsql
       - key: DATABASE_URL
-        fromService:
-          type: postgres
+        fromDatabase:
           name: jobsprout-db
-          property: internalUrl
+          property: connectionString 
       - key: LOG_CHANNEL
         value: stderr
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
         value: false
-
-  - type: postgres
-    name: jobsprout-db
-    plan: free
-    region: frankfurt
