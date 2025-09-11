@@ -1,64 +1,43 @@
-# Stage 1: Instala as dependências do Composer
-FROM composer:2 as vendor
-
-WORKDIR /app
-COPY database/ database/
-COPY composer.json composer.lock ./
-RUN composer install --no-interaction --no-plugins --no-scripts --prefer-dist --optimize-autoloader --no-dev
-
-# Stage 2: Compila os assets de front-end
-FROM node:18 as frontend
-
-WORKDIR /app
-COPY --from=vendor /app/vendor/ /app/vendor/
-COPY package.json package-lock.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-
-# Stage 3: A imagem final de produção
-FROM php:8.2-fpm-alpine
+FROM richarvey/nginx-php-fpm:3.1.6
 
 WORKDIR /var/www/html
 
-# Instala extensões PHP essenciais para o Laravel
-RUN apk add --no-cache \
-      bash \
-      nginx \
-      supervisor \
-      libzip-dev \
-      zip \
-      libpng-dev \
-      jpeg-dev \
-      freetype-dev \
-      postgresql-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-      gd \
-      zip \
-      pdo pdo_mysql
+USER root
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-      gd \
-      zip \
-      pdo pdo_mysql \
-      pdo_pgsql
-      
+RUN apk add --no-cache postgresql-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
-# Copia os arquivos da aplicação e as dependências já instaladas
-COPY --from=vendor /app/vendor /var/www/html/vendor
-COPY --from=frontend /app/public /var/www/html/public
-COPY . /var/www/html
+COPY --chown=nginx:nginx composer.json composer.lock ./
 
-# Copia a configuração do Nginx e o script de inicialização
-COPY docker/nginx.conf /etc/nginx/nginx.conf
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+USER nginx
 
-# Define as permissões corretas
-RUN chmod +x /usr/local/bin/entrypoint.sh \
-    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-EXPOSE 8080
+USER root
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+COPY --chown=nginx:nginx . .
+
+
+RUN chown -R nginx:nginx storage bootstrap/cache
+
+USER nginx
+
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
+
+USER root
+
+RUN echo '#!/bin/sh' > /etc/cont-init.d/20-laravel-migrate.sh && \
+    echo 'set -e' >> /etc/cont-init.d/20-laravel-migrate.sh && \
+    echo 'echo "Running database migrations..."' >> /etc/cont-init.d/20-laravel-migrate.sh && \
+    echo 'php artisan migrate --force' >> /etc/cont-init.d/20-laravel-migrate.sh && \
+    chmod +x /etc/cont-init.d/20-laravel-migrate.sh
+
+
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
