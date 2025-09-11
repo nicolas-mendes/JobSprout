@@ -41,7 +41,6 @@ RUN mkdir -p /etc/cont-init.d/ && \
     echo 'set -e' >> /etc/cont-init.d/20-laravel-setup.sh && \
     echo 'echo "Running Laravel setup tasks..."' >> /etc/cont-init.d/20-laravel-setup.sh && \
     echo 'php artisan optimize:clear' >> /etc/cont-init.d/20-laravel-setup.sh && \
-    echo 'php artisan migrate --force' >> /etc/cont-init.d/20-laravel-setup.sh && \
     echo 'php artisan optimize' >> /etc/cont-init.d/20-laravel-setup.sh && \
     chmod +x /etc/cont-init.d/20-laravel-setup.sh
 
