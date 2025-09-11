@@ -27,3 +27,10 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
+
+  - type: job
+    name: migrator
+    env: docker 
+    plan: free
+    region: frankfurt
+    startCommand: "php artisan migrate --seed --force"

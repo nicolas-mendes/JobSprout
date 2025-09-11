@@ -4,6 +4,7 @@
 
 <p align="center">
   Uma plataforma de anúncios de vagas construída com Laravel, projetada para conectar empresas e pessoas em busca de emprego.
+
 </p>
 
 <p align="center">
@@ -20,12 +21,6 @@
 - [Funcionalidades Principais](#funcionalidades-principais)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Demonstração Visual](#demonstração-visual)
-- [Começando](#começando)
-  - [Pré-requisitos](#pré-requisitos)
-  - [Instalação](#instalação)
-- [Testes](#testes)
-- [Licença](#licença)
-- [Contato](#contato)
 
 ## 📖 Sobre o Projeto
 
