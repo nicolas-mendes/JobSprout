@@ -5,6 +5,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\SalariesController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ Route::get('/search', SearchController::class);
 Route::get('/tags/{tag:title}', TagController::class);
 
 Route::get('/company/{employer}', [CompanyController::class,'show']);
+Route::get('/companies', [CompanyController::class,'index']);
+
+Route::get('/salaries', [SalariesController::class,'index']);
 
 Route::get('/jobs/create',[JobController::class,'create'])->middleware('auth');
 Route::post('/jobs',[JobController::class,'store'])->middleware('auth');

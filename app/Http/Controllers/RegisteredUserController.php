@@ -42,6 +42,7 @@ class RegisteredUserController extends Controller
             "employer" => ['required','max:255'],
             "logo" => ['required',File::types(['png','svg','jpg','jpeg','webp','gif'])],
             "employer_email" => ['nullable','email','max:255','unique:employers,email'],
+            "description" => ['required','max:65535'],
         ]);
 
 
@@ -52,6 +53,7 @@ class RegisteredUserController extends Controller
         $user->employer()->create([
             'name' => $employerAttributes['employer'],
             'email' => $employerAttributes['employer_email'] ?? $userAttributes['email'],
+            'description' => $employerAttributes['description'],
             'logo' => $logoPath,
         ]);
 

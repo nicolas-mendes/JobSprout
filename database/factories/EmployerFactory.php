@@ -38,6 +38,7 @@ class EmployerFactory extends Factory
             'logo' => $logoPath,
             'email' => fake()->companyEmail(),
             'user_id' => User::factory(),
+            'description' => fake()->text(255),
         ];
     }
 }

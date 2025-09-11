@@ -11,6 +11,7 @@
         <x-forms.input label="Employer Name" name="employer" />
         <x-forms.input label="Employer Logo" name="logo" type="file"/>
         <x-forms.input label="Employer E-mail" name="employer_email" type="email" placeholder="Not Required: Personal e-mail by default"/>
+        <x-forms.textarea label="Description" name="description" placeholder="We are seeking adventurous individuals to join our elite corps of astronauts." />
 
         <x-forms.button>Create Account</x-forms.button>
     </x-forms.form>

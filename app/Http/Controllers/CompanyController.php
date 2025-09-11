@@ -13,7 +13,12 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        
+        $employers = Employer::latest()->simplePaginate(10)->withQueryString();
+
+        // Envia tanto o employer quanto seus jobs para a view
+        return view('companies', [
+            'employers' => $employers
+        ]);
     }
 
     /**

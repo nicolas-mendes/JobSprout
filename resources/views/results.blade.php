@@ -9,11 +9,22 @@
     
     
     <div class="space-y-6">
-        @foreach ($jobs as $job)
+        @isset($jobs)
+            @foreach ($jobs as $job)
             <x-job-card-wide :$job />
-        @endforeach
+            @endforeach
+        @else
+            @foreach ($employers as $employer)
+                <x-company-card-wide :$employer />
+            @endforeach
+        @endisset
+
     </div>
     <div class="mt-4">
-        {{ $jobs->links() }}
+        @isset($jobs)
+            {{ $jobs->links() }}
+        @else
+            {{ $employers->links() }}
+        @endisset
     </div>
 </x-layout>

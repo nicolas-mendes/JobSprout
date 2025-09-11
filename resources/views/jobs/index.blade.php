@@ -15,7 +15,8 @@
                     </select>
 
                     <div class="h-6 w-px bg-white/25 mx-2"></div>
-
+                    
+                    <input type="hidden" name="search_type" value="jobs">
                     <input name="q" placeholder="Frontend Developer . . ."
                         class="bg-transparent flex-1 text-white placeholder:text-white/50 focus:outline-none">
                 </div>
@@ -23,7 +24,7 @@
 
         </section>
 
-        <section class="pt-8">
+        <section class="pt-4">
             <x-section-heading>Featured Jobs</x-section-heading>
             <div class="grid lg:grid-cols-3 gap-8 mt-8">
                 @foreach ($featuredJobs as $job)

@@ -28,8 +28,8 @@
 
             <div class="justify-self-center space-x-6 font-semibold text-lg font-mont">
                 <a href="/">Jobs</a>
-                <a href="">Careers</a>
-                <a href="">Companies</a>
+                <a href="/salaries">Salaries</a>
+                <a href="/companies">Companies</a>
             </div>
 
             <div class="justify-self-end">

@@ -9,7 +9,7 @@
     </div>
 
     <div class="flex justify-between items-center mt-auto">
-        <div class="space-x-1">
+        <div class="space-x-1 mx-1">
             @foreach ($job->tags->take(4) as $tag)
                 <x-tag :$tag size="small" />
             @endforeach
