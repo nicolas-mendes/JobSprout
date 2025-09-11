@@ -31,11 +31,20 @@ RUN apk add --no-cache \
       libpng-dev \
       jpeg-dev \
       freetype-dev \
+      postgresql-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
       gd \
       zip \
       pdo pdo_mysql
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install \
+      gd \
+      zip \
+      pdo pdo_mysql \
+      pdo_pgsql
+      
 
 # Copia os arquivos da aplicação e as dependências já instaladas
 COPY --from=vendor /app/vendor /var/www/html/vendor
