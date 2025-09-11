@@ -1,21 +1,16 @@
-# Arquivo: render.yaml
-
 services:
-  # Serviço 1: A Aplicação Laravel (Web Service)
+
   - type: web
     name: jobsprout
-    env: docker # Usa o Dockerfile na raiz do projeto
+    env: docker 
     plan: free
     region: frankfurt
     
-    # REMOVIDO: buildCommand e startCommand não são necessários com Docker,
-    # pois essa lógica já está no seu Dockerfile e entrypoint.sh.
-    
-    # Adicione um Health Check para o Render saber quando sua aplicação está pronta
+
     healthCheck:
       path: /up
 
-    # Variáveis de Ambiente
+
     envVars:
       - key: APP_URL
         fromService:
@@ -25,10 +20,10 @@ services:
       - key: APP_KEY
         sync: false
       - key: DB_CONNECTION
-        value: pgsql # Aqui no .env do Laravel continua sendo 'pgsql'
+        value: pgsql
       - key: DATABASE_URL
         fromService:
-          type: psql # <-- CORRIGIDO AQUI
+          type: psql 
           name: jobsprout-db
           property: internalUrl
       - key: LOG_CHANNEL
@@ -38,8 +33,8 @@ services:
       - key: APP_DEBUG
         value: false
 
-  # Serviço 2: O Banco de Dados PostgreSQL
-  - type: psql # <-- CORRIGIDO AQUI
+
+  - type: psql 
     name: jobsprout-db
     plan: free
     region: frankfurt
