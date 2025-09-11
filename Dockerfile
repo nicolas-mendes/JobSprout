@@ -7,6 +7,7 @@ USER root
 RUN apk add --no-cache \
     postgresql-dev \
     gd-dev \
+    oniguruma-dev \
     zip \
     unzip \
     && docker-php-ext-install \
