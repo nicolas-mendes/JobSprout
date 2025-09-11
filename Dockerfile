@@ -34,11 +34,10 @@ COPY --chown=nginx:nginx . .
 
 RUN chown -R nginx:nginx storage bootstrap/cache
 
-# Comandos de cache foram removidos daqui e movidos para o script de inicialização
-
 USER root
 
-RUN echo '#!/bin/sh' > /etc/cont-init.d/20-laravel-setup.sh && \
+RUN mkdir -p /etc/cont-init.d/ && \
+    echo '#!/bin/sh' > /etc/cont-init.d/20-laravel-setup.sh && \
     echo 'set -e' >> /etc/cont-init.d/20-laravel-setup.sh && \
     echo 'echo "Running Laravel setup tasks..."' >> /etc/cont-init.d/20-laravel-setup.sh && \
     echo 'php artisan optimize:clear' >> /etc/cont-init.d/20-laravel-setup.sh && \
