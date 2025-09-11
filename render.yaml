@@ -12,7 +12,7 @@ services:
     runtime: docker # 'runtime' é a chave correta, 'env' está obsoleto
     plan: free
     region: frankfurt
-    healthCheckPath: /up
+    healthCheckPath: /
 
     envVars:
       - key: APP_KEY
