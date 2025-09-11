@@ -46,6 +46,8 @@ COPY . /var/www/html
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
+RUN php artisan migrate --seed --force
+
 # Define as permissões corretas
 RUN chmod +x /usr/local/bin/entrypoint.sh \
     && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
