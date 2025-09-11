@@ -4,7 +4,7 @@ services:
   # Serviço 1: A Aplicação Laravel (Web Service)
   - type: web
     name: jobsprout # O nome do seu app
-    env: Docker      # <--- ESTA LINHA É A SOLUÇÃO! Força o ambiente PHP.
+    env: docker      # <--- ESTA LINHA É A SOLUÇÃO! Força o ambiente PHP.
     plan: free    # Garante que está no plano gratuito
     region: frankfurt # Região do plano gratuito (pode ser oregon também)
 
