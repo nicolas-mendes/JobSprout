@@ -26,7 +26,7 @@ COPY --chown=nginx:nginx composer.json composer.lock ./
 
 USER nginx
 
-RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
 USER root
 
@@ -34,19 +34,17 @@ COPY --chown=nginx:nginx . .
 
 RUN chown -R nginx:nginx storage bootstrap/cache
 
-USER nginx
-
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
+# Comandos de cache foram removidos daqui e movidos para o script de inicialização
 
 USER root
 
-RUN echo '#!/bin/sh' > /etc-cont-init.d/20-laravel-migrate.sh && \
-    echo 'set -e' >> /etc/cont-init.d/20-laravel-migrate.sh && \
-    echo 'echo "Running database migrations..."' >> /etc/cont-init.d/20-laravel-migrate.sh && \
-    echo 'php artisan migrate --force' >> /etc/cont-init.d/20-laravel-migrate.sh && \
-    chmod +x /etc/cont-init.d/20-laravel-migrate.sh
+RUN echo '#!/bin/sh' > /etc/cont-init.d/20-laravel-setup.sh && \
+    echo 'set -e' >> /etc/cont-init.d/20-laravel-setup.sh && \
+    echo 'echo "Running Laravel setup tasks..."' >> /etc/cont-init.d/20-laravel-setup.sh && \
+    echo 'php artisan optimize:clear' >> /etc/cont-init.d/20-laravel-setup.sh && \
+    echo 'php artisan migrate --force' >> /etc/cont-init.d/20-laravel-setup.sh && \
+    echo 'php artisan optimize' >> /etc/cont-init.d/20-laravel-setup.sh && \
+    chmod +x /etc/cont-init.d/20-laravel-setup.sh
 
 ENV WEBROOT /var/www/html/public
 ENV PHP_ERRORS_STDERR 1
