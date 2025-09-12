@@ -1,52 +1,42 @@
-FROM richarvey/nginx-php-fpm:3.1.6
+# Usa uma imagem base oficial e mais moderna do PHP com FPM e Alpine Linux
+FROM php:8.2-fpm-alpine AS base
 
+# Instala dependências do sistema e do PHP em uma única camada
+RUN apk add --no-cache \
+        bash \
+        icu-dev \
+        libzip-dev \
+        libpng-dev \
+        postgresql-dev \
+    && docker-php-ext-install \
+        pdo \
+        pdo_pgsql \
+        bcmath \
+        intl \
+        zip \
+        gd
+
+# Instala o Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Define o diretório de trabalho
 WORKDIR /var/www/html
 
-USER root
+# Copia apenas os arquivos do composer primeiro para aproveitar o cache do Docker
+COPY composer.json composer.lock ./
 
-RUN chown -R nginx:nginx /var/www/html
+# Instala dependências sem scripts e otimiza o autoloader
+# --no-scripts evita que o artisan tente se conectar ao DB durante o build
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
-RUN apk add --no-cache \
-    icu-dev \
-    postgresql-dev \
-    gd-dev \
-    oniguruma-dev \
-    zip \
-    unzip \
-    && docker-php-ext-install \
-    pdo \
-    pdo_pgsql \
-    bcmath \
-    mbstring \
-    pcntl \
-    gd \
-    intl
+# Copia o restante do código da aplicação
+COPY . .
 
-COPY --chown=nginx:nginx composer.json composer.lock ./
+# Ajusta permissões para os diretórios que o Laravel precisa escrever
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-USER nginx
+# Expõe a porta do PHP-FPM
+EXPOSE 9001
 
-RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
-
-USER root
-
-COPY --chown=nginx:nginx . .
-
-RUN chown -R nginx:nginx storage bootstrap/cache
-
-USER root
-
-RUN mkdir -p /etc/cont-init.d/ && \
-    echo '#!/bin/sh' > /etc/cont-init.d/20-laravel-setup.sh && \
-    echo 'set -e' >> /etc/cont-init.d/20-laravel-setup.sh && \
-    echo 'echo "Running Laravel setup tasks..."' >> /etc/cont-init.d/20-laravel-setup.sh && \
-    echo 'php artisan config:clear' >> /etc/cont-init.d/20-laravel-setup.sh && \
-    echo 'php artisan config:cache' >> /etc/cont-init.d/20-laravel-setup.sh && \
-    echo 'php artisan migrate --force' >> /etc/cont-init.d/20-laravel-setup.sh && \
-    chmod +x /etc/cont-init.d/20-laravel-setup.sh
-
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# O comando para iniciar o PHP-FPM é herdado da imagem base `php:8.2-fpm-alpine`
+# Não precisamos de um CMD ou ENTRYPOINT customizado aqui.
