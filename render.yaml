@@ -14,7 +14,7 @@ services:
     region: frankfurt
     healthCheckPath: /
     buildCommand: "php artisan config:clear && php artisan route:cache && php artisan view:cache"
-    startCommand: "/usr/local/bin/entrypoint.sh" # O comando para iniciar seu servidor
+    startCommand: "nginx -t && /usr/local/bin/entrypoint.sh" # O comando para iniciar seu servidor
     envVars:
       - key: APP_KEY
         sync: false
