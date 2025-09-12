@@ -1,5 +1,5 @@
 # Usa uma imagem base oficial e mais moderna do PHP com FPM e Alpine Linux
-FROM php:8.2-fpm-alpine AS base
+FROM richarvey/nginx-php-fpm:3.1.6
 
 # Instala dependências do sistema e do PHP em uma única camada
 RUN apk add --no-cache \

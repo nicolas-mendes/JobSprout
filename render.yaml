@@ -14,7 +14,7 @@ services:
     region: frankfurt
     healthCheckPath: /
     buildCommand: php artisan config:clear
-    dockerCommand: "nginx -g 'daemon off'"
+    dockerCommand: "/usr/local/bin/entrypoint.sh"
     envVars:
       - key: APP_KEY
         sync: false
