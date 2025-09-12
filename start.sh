@@ -4,9 +4,6 @@
 set -e
 
 # Roda as migrações do banco de dados
-composer install --no-dev
-npm install
-npm run build
 php artisan optimize:clear
 php artisan migrate --force
 

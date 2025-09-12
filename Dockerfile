@@ -1,3 +1,10 @@
+FROM node:18-alpine as node_builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build 
+
 FROM richarvey/nginx-php-fpm:3.1.6
 
 COPY . .
