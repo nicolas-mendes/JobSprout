@@ -2,13 +2,13 @@
 # Para o script se um comando falhar
 set -e
 
-# Gera a chave da aplicação, se não existir
-php artisan key:generate --force
+# Copia o .env.example para criar um .env.
+# Agora o comando key:generate terá um arquivo para modificar.
+cp .env.example .env
 
-# Limpa e cacheia as configurações para otimizar a performance
+# Roda os comandos do artisan
+php artisan key:generate --force
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
-
-# Roda as migrações do banco de dados
 php artisan migrate --force
