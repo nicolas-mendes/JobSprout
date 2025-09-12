@@ -29,6 +29,11 @@ COPY composer.json composer.lock ./
 # --no-scripts evita que o artisan tente se conectar ao DB durante o build
 RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
 
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+# Dá permissão de execução ao script
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Copia o restante do código da aplicação
 COPY . .
 
