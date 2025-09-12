@@ -14,7 +14,7 @@ services:
     region: frankfurt
     healthCheckPath: /
     buildCommand: php artisan config:clear
-    dockerCommand: nginx -g 'daemon off'
+    dockerCommand: "nginx -g 'daemon off'"
     envVars:
       - key: APP_KEY
         sync: false
