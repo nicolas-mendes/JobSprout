@@ -1,4 +1,4 @@
-# render.yaml - Versão Final
+# render.yaml - Versão Final Corrigida
 
 databases:
   - name: jobsprout-db
@@ -14,7 +14,8 @@ services:
     region: frankfurt
     healthCheckPath: /
     buildCommand: "php artisan config:clear && php artisan route:cache && php artisan view:cache"
-    startCommand: "nginx -t && /usr/local/bin/entrypoint.sh" # O comando para iniciar seu servidor
+    dockerCommand: "nginx -t && /usr/local/bin/entrypoint.sh" # Campo corrigido para runtime: docker
+
     envVars:
       - key: APP_KEY
         sync: false
@@ -34,7 +35,7 @@ services:
         value: false
 
 jobs:
-  - type: pre_deploy # Roda antes de um novo deploy ser ativado
+  - type: pre_deploy
     name: migrate
     plan: free
     dockerCommand: "php artisan migrate --force"
