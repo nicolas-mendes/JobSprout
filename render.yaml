@@ -13,9 +13,8 @@ services:
     plan: free
     region: frankfurt
     healthCheckPath: /
-    buildCommand: "php artisan config:clear && php artisan route:cache && php artisan view:cache"
-    dockerCommand: "nginx -t && /usr/local/bin/entrypoint.sh" # Campo corrigido para runtime: docker
-
+    buildCommand: "php artisan config:clear" # Simplificado para o teste
+    dockerCommand: "nginx -g 'daemon off;'"
     envVars:
       - key: APP_KEY
         sync: false
