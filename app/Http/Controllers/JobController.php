@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+use function Laravel\Prompts\alert;
 
 class JobController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -88,25 +92,44 @@ class JobController extends Controller
      */
     public function edit(Job $job)
     {
+        $this->authorize('update', $job);
+
         return view('jobs.edit', ['job' => $job]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Job $job)
-    {
-        request()->validate([
-            'title' => ['required','string','max:255','min:3'],
-            'salary' => ['required','numeric','decimal:0,2'],
-            'description' => ['required','string','max:65535']
+    public function update(Request $request,Job $job)
+    {   
+        $this->authorize('update', $job);
+
+        $attributes = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'salary' => ['required', 'numeric'],
+            'location' => ['required', 'string'],
+            'schedule' => ['required', 'in:Full-Time,Part-Time'],
+            'url' => ['required', 'url'],
+            'tags' => ['nullable', 'string'],
+            'description' => ['required', 'string'],
         ]);
 
-        $job->update([
-            'title' => request('title'),
-            'salary' => request('salary'),
-            'description' => request('description')
-        ]);
+        $attributes['featured'] = $request->has('featured');
+
+        $job->update(Arr::except($attributes, 'tags'));
+
+        $tags = explode(',', $attributes['tags'] ?? '');
+        
+        $tagIds = [];
+        
+        foreach ($tags as $tagName) {
+            if (!empty(trim($tagName))) {
+                $tagModel = Tag::firstOrCreate(['title' => trim(strtolower($tagName))]);
+                $tagIds[] = $tagModel->id;
+            }
+        }
+
+        $job->tags()->sync($tagIds);
 
         return redirect('/jobs/'.$job->id);
     }
@@ -116,8 +139,11 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
+        $this->authorize('delete', $job);
+
         $job->delete();
-        return view('jobs.index');
+
+        return redirect('/');
     }
 
 }
