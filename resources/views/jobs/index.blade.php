@@ -40,8 +40,6 @@
                 @foreach ($tags as $tag)
                     <x-tag :$tag />
                 @endforeach
-
-
             </div>
         </section>
 

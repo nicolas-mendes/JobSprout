@@ -44,11 +44,11 @@
         </x-forms.form>
     </x-panel>
 
-    <div class="space-y-6">
+    <div class="space-y-6 mt-18">
         @forelse ($jobs as $job)
             <x-job-card-wide :$job />
         @empty
-            <p>No jobs found matching your criteria.</p>
+            <p class="text-gray-500 text-lg justify-self-center mt-40">No jobs found matching your filter.</p>
         @endforelse
     </div>
 

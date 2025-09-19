@@ -32,7 +32,7 @@
                 @method('DELETE')
 
                 <x-forms.button
-                    onclick="return confirm('Are you sure you want to permanently delete this job?')"
+                    onclick="return confirm('Are you sure you want to permanently delete this job?b')"
                     class="!bg-red-500">
                     Delete
                 </x-forms.button>

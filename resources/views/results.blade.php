@@ -10,13 +10,18 @@
     
     <div class="space-y-6">
         @isset($jobs)
-            @foreach ($jobs as $job)
-            <x-job-card-wide :$job />
-            @endforeach
+            @forelse ($jobs as $job)
+                <x-job-card-wide :$job />
+            @empty
+                <p class="text-gray-500 text-lg justify-self-center mt-40">No jobs found matching your filter.</p>
+            @endforelse
+
         @else
-            @foreach ($employers as $employer)
+            @forelse ($employers as $employer)
                 <x-company-card-wide :$employer />
-            @endforeach
+            @empty
+                <p class="text-gray-500 text-lg justify-self-center mt-40">No companies found matching your filter.</p>    
+            @endforelse
         @endisset
 
     </div>

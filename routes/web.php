@@ -19,7 +19,10 @@ Route::get('/companies', [CompanyController::class,'index']);
 
 Route::get('/salaries', [SalariesController::class,'index']);
 
-Route::get('/jobs/create',[JobController::class,'create'])->middleware('auth');
+Route::get('/jobs/create',[JobController::class,'create'])
+    ->middleware('auth')
+    ->name('jobs.create');
+
 Route::post('/jobs',[JobController::class,'store'])->middleware('auth');
 
 Route::get('/jobs/{job}',[JobController::class, 'show']);

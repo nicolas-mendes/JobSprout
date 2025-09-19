@@ -27,28 +27,29 @@
             </div>
 
             <div class="justify-self-center space-x-6 font-semibold text-lg font-mont">
-                <a href="/">Jobs</a>
-                <a href="/salaries">Salaries</a>
-                <a href="/companies">Companies</a>
+                <a href="/" class="text-white hover:text-sprout transition-colors duration-300">Jobs</a>
+                <a href="/salaries" class="text-white hover:text-sprout transition-colors duration-300">Salaries</a>
+                <a href="/companies" class="text-white hover:text-sprout transition-colors duration-300">Companies</a>
             </div>
 
             <div class="justify-self-end">
                 @auth
                     <div class="space-x-6 font-semibold text-md font-mont flex items-center">
-                        <a href="/jobs/create">Post a Job</a>
+                        
+                        <a href="/jobs/create" class="text-white hover:text-sprout transition-colors duration-300">Post a Job</a>
 
                         <form method="POST" action="/logout">
                             @csrf
                             @method('DELETE')
-                            <button>Log Out</button>
+                            <button class="text-red-300">Log Out</button>
                         </form>
                     </div>
                 @endauth
 
                 @guest
                     <div class="space-x-6 font-semibold text-md font-mont">
-                        <a href="/register">Sign Up</a>
-                        <a href="/login">Log In</a>
+                        <a href="/register" class="text-white hover:text-blue-300 transition-colors duration-300">Sign Up</a>
+                        <a href="/login" class="text-white hover:text-sprout transition-colors duration-300">Log In</a>
                     </div>
                 @endguest
             </div>
