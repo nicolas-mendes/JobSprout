@@ -24,9 +24,9 @@
             <h1 class="mt-5 text-xl"><strong>Salary per Year:</strong></h1> <p>U$ {{ number_format($job['salary'], 2, '.', ' ') }}</p>
         </div>
         <div class="mt-1">
-            <x-employer-logo :width="140" :logo="$job->employer->logo" class="justify-self-top"></x-employer-logo>
+            <x-employer-logo :width="180" :logo="$job->employer->logo" class="justify-self-top"></x-employer-logo>
             @can('update', $job)
-                <x-button :href="route('jobs.edit', $job)" class="bg-white/25 border border-white/30 mt-5"> Edit </x-button>
+                <x-button :href="route('jobs.edit', $job)" class="bg-white/10 !py-2 !px-4 border border-white/15 mt-5 text-white/50"> Edit </x-button>
             @endcan
         </div>
     </div>
