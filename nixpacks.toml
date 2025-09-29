@@ -1,28 +1,12 @@
 # nixpacks.toml
 
-# Define os comandos a serem executados durante a fase de build/deploy.
-# A ordem aqui é importante.
 [phases.build]
 cmds = [
-    # 1. Instala dependências do PHP
-    "composer install --optimize-autoloader --no-dev",
-
-    # 2. Instala dependências do Node.js e compila o CSS/JS
-    "npm install",
     "npm run build",
 
-    # 3. Otimiza o Laravel para produção
     "php artisan config:cache",
     "php artisan route:cache",
     "php artisan view:cache",
 
-    # 4. Roda as migrações do banco de dados (essencial)
-    "php artisan migrate --force",
-
-    # 5. Cria o link simbólico para o armazenamento
     "php artisan storage:link"
 ]
-
-# Define o comando que inicia o seu servidor web.
-[start]
-command = "heroku-php-apache2 public/"
