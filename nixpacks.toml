@@ -2,11 +2,17 @@
 
 [phases.build]
 cmds = [
+    "composer install --optimize-autoloader --no-dev",
+    "npm install",
     "npm run build",
-
+    "php artisan config:clear",
     "php artisan config:cache",
     "php artisan route:cache",
     "php artisan view:cache",
-
-    "php artisan storage:link"
+    "php artisan migrate --force"
 ]
+
+[start]
+# 1. Força a criação do link simbólico correto usando a variável de ambiente.
+# 2. Inicia o servidor web.
+command = "ln -sfn $PERSISTENT_STORAGE_PATH public/storage && heroku-php-apache2 public/"
