@@ -1,4 +1,6 @@
-<img src="./docs/logo.png" alt="Logo JobSprout" width="200"/>
+<p align="center">
+  <img src="./docs/logo.png" alt="Logo JobSprout" width="200"/>
+</p>
 
 # JobSprout
 
