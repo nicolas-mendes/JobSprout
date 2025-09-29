@@ -1,0 +1,9 @@
+php artisan tinker
+config('filesystems.disks.public.root')
+
+env | grep PERSISTENT_STORAGE_PATH
+
+ls -l public/storage
+
+rm public/storage
+php artisan storage:link
