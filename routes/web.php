@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordValidationController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\RegisteredUserController;
@@ -36,6 +37,8 @@ Route::patch('/jobs/{job}',[JobController::class, 'update'])
 
 Route::delete('/jobs/{job}',[JobController::class, 'destroy'])
     ->name('jobs.destroy');
+
+Route::post('/validate-password', [PasswordValidationController::class, 'validatePassword']);
 
 Route::middleware('guest')->group(function(){
     Route::get('/register',[RegisteredUserController::class,'create']);
