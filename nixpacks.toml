@@ -8,11 +8,9 @@ cmds = [
     "php artisan config:clear",
     "php artisan config:cache",
     "php artisan route:cache",
-    "php artisan view:cache",
-    "php artisan migrate --force"
+    "php artisan view:cache"
 ]
 
 [start]
-# 1. Força a criação do link simbólico correto usando a variável de ambiente.
-# 2. Inicia o servidor web.
-command = "ln -sfn $PERSISTENT_STORAGE_PATH public/storage && heroku-php-apache2 public/"
+# Alterado de "command" para "cmd" para alinhar com a documentação.
+cmd = "ln -sfn $PERSISTENT_STORAGE_PATH public/storage && heroku-php-apache2 public/"
