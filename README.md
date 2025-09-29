@@ -1,4 +1,4 @@
-# ![Logo JobSprout](./docs/logo.png)
+<img src="./docs/logo.png" alt="Logo JobSprout" width="200"/>
 
 # JobSprout
 
@@ -8,10 +8,13 @@ Uma plataforma de vagas desenvolvida em **Laravel**, **Vite** e **Tailwind CSS**
 
 ## 📸 Prévia do Projeto
 
-> _Adicione aqui capturas de tela da aplicação_
-
+### Tela Inicial
 ![Tela inicial](./docs/screenshot-home.png)  
+
+### Tela de Listagem de Vagas
 ![Tela de listagem de vagas](./docs/screenshot-jobs.png)  
+
+### Tela de Detalhes da Vaga
 ![Tela de detalhes da vaga](./docs/screenshot-job-detail.png)  
 
 ---
