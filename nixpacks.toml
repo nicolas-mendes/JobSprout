@@ -1,8 +1,4 @@
 # nixpacks.toml
 
 [start]
-cmd = 
-"
-chmod +x start.sh
-./start.sh
-"
+cmd = "./start.sh"
