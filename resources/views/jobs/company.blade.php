@@ -1,12 +1,16 @@
 <x-layout>
-    <div class="flex items-center">
-        <x-page-heading class="mx-auto">Jobs for Company: {{ $employer->name }}</x-page-heading>
-        <x-employer-logo :width="120" :logo="$employer->logo"></x-employer-logo>
-    </div>
+    <x-page-heading> Jobs for Company: {{ $employer->name }}</x-page-heading>
 
-    <h1 class="text-xl font-bold">About Company:</h1>
-    <div class="mt-5 ms-5">
-        {{ $employer->description }}
+
+
+    <div class="flex justify-between items-start mt-10">
+        <div>
+            <h1 class="text-xl"><strong>Company E-Mail:</strong></h1> <a class="text-sprout" href="mailto:{{ $employer->email }}">{{ $employer->email }}</a>
+            <h1 class="text-xl mt-2"><strong>About Company:</strong></h1> <p>{{ $employer->description }}</p>
+        </div>
+        <div class="mt-1">
+            <x-employer-logo :width="120" :logo="$employer->logo"></x-employer-logo>
+        </div>
     </div>
 
     <div class="space-y-6 mt-12">

@@ -24,7 +24,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        return view('auth.register'); 
     }
 
     /**
@@ -32,34 +32,34 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {   
-        $userAttributes = $request->validate([
-            "name" => ['required','max:255'],
-            "email" => ['required','email','max:255','unique:users,email'],
-            "password" => ['required','confirmed', Password::default()],
-        ]);
+        // $userAttributes = $request->validate([
+        //     "name" => ['required','max:255'],
+        //     "email" => ['required','email','max:255','unique:users,email'],
+        //     "password" => ['required','confirmed', Password::default()],
+        // ]);
         
-        $employerAttributes = $request->validate([
-            "employer" => ['required','max:255'],
-            "logo" => ['required',File::types(['png','svg','jpg','jpeg','webp','gif'])],
-            "employer_email" => ['nullable','email','max:255','unique:employers,email'],
-            "description" => ['required','max:65535'],
-        ]);
+        // $employerAttributes = $request->validate([
+        //     "employer" => ['required','max:255'],
+        //     "logo" => ['required',File::types(['png','svg','jpg','jpeg','webp','gif'])],
+        //     "employer_email" => ['nullable','email','max:255','unique:employers,email'],
+        //     "description" => ['required','max:65535'],
+        // ]);
 
 
-        $user = User::create($userAttributes);
+        // $user = User::create($userAttributes);
 
-        $logoPath = $request->logo->store('logos', 'public');
+        // $logoPath = $request->logo->store('logos', 'public');
 
-        $user->employer()->create([
-            'name' => $employerAttributes['employer'],
-            'email' => $employerAttributes['employer_email'] ?? $userAttributes['email'],
-            'description' => $employerAttributes['description'],
-            'logo' => $logoPath,
-        ]);
+        // $user->employer()->create([
+        //     'name' => $employerAttributes['employer'],
+        //     'email' => $employerAttributes['employer_email'] ?? $userAttributes['email'],
+        //     'description' => $employerAttributes['description'],
+        //     'logo' => $logoPath,
+        // ]);
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect('/');
+        // return redirect('/');
     }
 
     /**

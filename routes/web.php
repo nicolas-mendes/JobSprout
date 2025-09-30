@@ -38,8 +38,6 @@ Route::patch('/jobs/{job}',[JobController::class, 'update'])
 Route::delete('/jobs/{job}',[JobController::class, 'destroy'])
     ->name('jobs.destroy');
 
-Route::post('/validate-password', [PasswordValidationController::class, 'validatePassword']);
-
 Route::middleware('guest')->group(function(){
     Route::get('/register',[RegisteredUserController::class,'create']);
     Route::post('/register',[RegisteredUserController::class,'store']);
