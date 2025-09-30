@@ -157,4 +157,16 @@ return [
     */
 
     'pagination_theme' => 'tailwind',
+
+    /*
+    |---------------------------------------------------------------------------
+    | Livewire Middleware Group
+    |---------------------------------------------------------------------------
+    |
+    | This value is the middleware group that Livewire's internal routes
+    | will be registered under. By default, this is the "web" group.
+    |
+    */
+
+    'middleware_group' => 'web', 
 ];
