@@ -33,16 +33,16 @@ class RegisterForm extends Component
     public bool $passwordHasSymbol = false;
     public bool $passwordsMatch = false;
 
+    
     public function updatedLogo()
     {
         try {
             $this->validateOnly('logo', [
-                'logo' => [
+                'logo' => 
+                    [
                     'required',
-                    File::types(['png', 'svg', 'jpg', 'jpeg', 'webp', 'gif']),
-                    'max:2048'
-                ],
-            ]);
+                    File::types(['png', 'svg', 'jpg', 'jpeg', 'webp', 'gif'])],
+                    ]);
         } catch (\Exception $e) {
             $this->addError('logo', 'The file is to large, the maximum size is 2MB');
             $this->logo = null;
@@ -81,7 +81,7 @@ class RegisterForm extends Component
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::defaults()],
             'employer' => ['required', 'string', 'max:255'],
-            'logo' => ['required', File::types(['png', 'svg', 'jpg', 'jpeg', 'webp', 'gif']),'max:2048' ],
+            'logo' => ['required', File::types(['png', 'svg', 'jpg', 'jpeg', 'webp', 'gif']) ],
             'employer_email' => ['nullable', 'email', 'max:255', 'unique:employers,email'],
             'description' => ['required', 'string', 'max:65535'],
         ]);
