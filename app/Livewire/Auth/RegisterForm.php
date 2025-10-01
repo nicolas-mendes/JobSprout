@@ -33,21 +33,7 @@ class RegisterForm extends Component
     public bool $passwordHasSymbol = false;
     public bool $passwordsMatch = false;
 
-    
-    public function updatedLogo()
-    {
-        try {
-            $this->validateOnly('logo', [
-                'logo' => 
-                    [
-                    'required',
-                    File::types(['png', 'svg', 'jpg', 'jpeg', 'webp', 'gif'])],
-                    ]);
-        } catch (\Exception $e) {
-            $this->addError('logo', 'The file is to large, the maximum size is 2MB');
-            $this->logo = null;
-        }
-    }
+
 
     public function updatedPassword($value)
     {

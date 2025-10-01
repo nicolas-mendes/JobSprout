@@ -52,7 +52,7 @@
     <x-forms.input label="Employer E-mail" name="employer_email" type="email"
         placeholder="Not Required: Personal e-mail by default" wire:model="employer_email" />
     <x-forms.textarea label="Description" name="description" placeholder="We are seeking adventurous individuals..."
-        wire:model="description" />
+        wire:model.defer="description" />
 
     <x-forms.button>Create Account</x-forms.button>
 </x-forms.form>
