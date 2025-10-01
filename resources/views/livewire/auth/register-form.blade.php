@@ -48,11 +48,12 @@
     <x-forms.divider />
 
     <x-forms.input label="Employer Name" name="employer" wire:model="employer" />
-    <x-forms.input label="Employer Logo" name="logo" type="file" wire:model="logo" accept=".png,.svg,.jpg,.jpeg,.webp" />
-    <x-forms.input label="Employer E-mail" name="employer_email" type="email"
-        placeholder="Not Required: Personal e-mail by default" wire:model="employer_email" />
-    <x-forms.textarea label="Description" name="description" placeholder="We are seeking adventurous individuals..."
-        wire:model.defer="description" />
+
+    <x-forms.input label="Employer Logo" name="logo" type="file" wire:model.defer="logo" accept=".png,.svg,.jpg,.jpeg,.webp" />
+
+    <x-forms.input label="Employer E-mail" name="employer_email" type="email" placeholder="Not Required: Personal e-mail by default" wire:model="employer_email" />
+
+    <x-forms.textarea label="Description" name="description" placeholder="We are seeking adventurous individuals..." wire:model="description" />
 
     <x-forms.button>Create Account</x-forms.button>
 </x-forms.form>
