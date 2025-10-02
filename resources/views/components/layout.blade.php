@@ -13,7 +13,6 @@
         href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     @vite(['resources/js/app.js', 'resources/css/app.css'])
-    @livewireStyles
 </head>
 
 <body class="bg-black text-white font-honk">
@@ -62,7 +61,7 @@
         </main>
     </div>
     
-    @livewireScripts
+    @stack('scripts')
 </body>
 
 </html>
