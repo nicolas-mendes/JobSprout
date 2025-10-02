@@ -1,6 +1,6 @@
 <?php
 
-return [
+return [https://github.com/nicolas-mendes/JobSprout/blob/main/config/filesystems.php
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => public_path('storage'),
+            'root' => storage_path('app'),
             'serve' => true,
             'throw' => false,
             'report' => false,
@@ -40,7 +40,7 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => env('PERSISTENT_STORAGE_PATH', storage_path('app/public')),
+            'root' => public_path('storage'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
