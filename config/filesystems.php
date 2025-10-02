@@ -1,6 +1,6 @@
 <?php
 
-return [https://github.com/nicolas-mendes/JobSprout/blob/main/config/filesystems.php
+return [
 
     /*
     |--------------------------------------------------------------------------
