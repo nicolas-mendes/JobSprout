@@ -1,36 +1,35 @@
 #!/bin/sh
 set -e
 
-echo "Step 1: Creating symbolic link for persistent storage..."
-# Garante que qualquer link quebrado ou arquivo existente seja removido antes de criar um novo.
-rm -f /app/public/storage
-ln -s /var/lib/data/public /app/public/storage
-echo "Symbolic link created."
-
-# --- CORREÇÃO APLICADA AQUI ---
-# O usuário do servidor web (Nginx/PHP-FPM) geralmente é 'www-data' em imagens baseadas em Debian/Ubuntu/Alpine.
-# Não use 'whoami', pois ele retornará 'root', que é o usuário que executa este script,
-# mas não o usuário que executa a aplicação web.
+# Assumindo que seu volume persistente está montado em /app/storage
+# Se for diferente, ajuste este caminho.
+PERSISTENT_STORAGE_PATH="/app/storage"
 WEB_USER="www-data"
 
-echo "Step 2: Fixing permissions for persistent storage at /var/lib/data/public..."
+echo "Step 1: Optimizing Laravel..."
+# Limpa caches antigos e cria novos para garantir que a nova config de filesystem seja lida.
+php artisan config:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
-# Define o proprietário e o grupo da pasta de armazenamento para o usuário do servidor web.
-# O '-R' garante que a mudança seja aplicada recursivamente a todos os arquivos e subdiretórios.
-echo "Changing owner to $WEB_USER:$WEB_USER..."
-chown -R $WEB_USER:$WEB_USER /var/lib/data/public
+echo "Step 2: Linking storage..."
+# Força a criação do link simbólico padrão do Laravel.
+# Ele cria /app/public/storage -> /app/storage/app/public
+php artisan storage:link --force
+echo "Symbolic link created."
 
-# Ajusta as permissões para garantir a segurança e a funcionalidade.
-# Diretorios precisam de permissão de execução (775) para serem acessados.
-echo "Setting directory permissions to 775..."
-find /var/lib/data/public -type d -exec chmod 775 {} \;
+echo "Step 3: Fixing permissions for persistent storage at $PERSISTENT_STORAGE_PATH..."
+# Garante que o diretório onde as logos serão salvas exista.
+mkdir -p $PERSISTENT_STORAGE_PATH/app/public/logos
 
-# Arquivos geralmente precisam de permissão de escrita para o dono e o grupo (664).
-echo "Setting file permissions to 664..."
-find /var/lib/data/public -type f -exec chmod 664 {} \;
+# Define o dono de TODA a pasta de armazenamento para o usuário do servidor web.
+chown -R $WEB_USER:$WEB_USER $PERSISTENT_STORAGE_PATH
 
+# Define permissões seguras e funcionais para toda a pasta.
+chmod -R 775 $PERSISTENT_STORAGE_PATH
 echo "Permissions fixed."
 
-echo "Step 3: Starting the application..."
+echo "Step 4: Starting the application..."
 # O restante do seu script permanece o mesmo.
 node /assets/scripts/prestart.mjs /assets/nginx.template.conf /nginx.conf && (php-fpm -y /assets/php-fpm.conf & nginx -c /nginx.conf)
