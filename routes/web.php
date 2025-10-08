@@ -9,6 +9,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SalariesController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/',[JobController::class,'index']);
 Route::get('/search', SearchController::class);
@@ -48,3 +49,26 @@ Route::middleware('guest')->group(function(){
 
 
 Route::delete('/logout',[SessionController::class,'destroy'])->middleware('auth');
+
+
+Route::get('/test-write', function () {
+    try {
+        $disk = Storage::disk('public');
+        $path = 'logos/test_from_laravel.txt';
+        $content = 'Laravel write test successful at ' . now();
+
+        // Tenta escrever o arquivo
+        $success = $disk->put($path, $content);
+
+        if ($success) {
+            $realPath = $disk->path($path);
+            return "SUCESSO! O arquivo foi escrito em: " . $realPath;
+        } else {
+            // Se put() retornar false, tenta pegar o último erro do PHP
+            $error = error_get_last();
+            return "FALHA! O método put() retornou falso. Último erro do PHP: " . print_r($error, true);
+        }
+    } catch (\Exception $e) {
+        return "EXCEÇÃO! Ocorreu um erro: " . $e->getMessage();
+    }
+});
